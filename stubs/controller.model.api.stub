@@ -5,61 +5,48 @@ namespace {{ namespace }};
 use {{ namespacedModel }};
 use {{ rootNamespace }}Http\Controllers\Controller;
 use Illuminate\Http\Request;
+<<<<<< feature/stubs
+use Illuminate\Http\JsonResponse;
+
 
 class {{ class }} extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        ${{ modelVariable }}s = {{ model }}::all();
+
+        return response()->json(${{ modelVariable }}s);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+
+    public function store(Request $request): JsonResponse
     {
-        //
+        ${{ modelVariable }} = {{ model }}::create($request->validated());
+
+        return response()->json(${{ modelVariable }});
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
-     * @return \Illuminate\Http\Response
-     */
-    public function show({{ model }} ${{ modelVariable }})
+
+    public function show({{ model }} ${{ modelVariable }}): JsonResponse
     {
-        //
+        return response()->json(${{ modelVariable }}); // forse basta questo
+//        return new EmployeeSingleResource($employee);  // è un JsonResource
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, {{ model }} ${{ modelVariable }})
+
+    public function update(Request $request, {{ model }} ${{ modelVariable }}): JsonResponse
     {
-        //
+        ${{ modelVariable }}->update($request->validated());
+
+        return response()->json(${{ modelVariable }});
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy({{ model }} ${{ modelVariable }})
+
+    public function destroy({{ model }} ${{ modelVariable }}): JsonResponse
     {
-        //
+        ${{ modelVariable }}->delete();
+
+        return response()->json('Deleted successfully');
     }
 }
