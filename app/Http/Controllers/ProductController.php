@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
 use App\Models\Product;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -25,19 +26,25 @@ class ProductController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        //Da testare
-        Product::create($request->validated());
+        $product = [
+            'name' => $request->name,
+            'code' => $request->code,
+            'details' => $request->details,
+        ];
 
         $image = $request->file('logo');
 
         if ($image){
-            $img_name = 'product_' . $request->code . date('dmy_H_s_i');
+            $img_name = 'Prod_' . $request->code . '_' . date('dmy_H_s_i');
             $img_ext = strtolower($image->getClientOriginalExtension());
             $img_full_name = $img_name . '.' . $img_ext;
-            $upload_path = 'public/media/';
+            $upload_path = 'media/';
             $img_url = $upload_path . $img_full_name;
             $image->move($upload_path , $img_full_name);
+            $product['logo'] = $img_url;
         }
+
+        Product::insert($product);
 
         return redirect()->route('products.index')->with('message', 'Product Created Successfully');
     }
@@ -57,14 +64,38 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product): RedirectResponse
     {
-        $product->update($request->validated());
+//        dd($request->all());
 
-        return redirect()->route('products.index');
+        $data = [
+            'name' => $request->name,
+            'code' => $request->code,
+            'details' => $request->details,
+        ];
+
+        $old_logo  = $request->old_logo;
+        $image = $request->file('logo');
+
+        if ($image){
+            unlink($old_logo);
+            $img_name = 'Prod_' . $request->code . '_' . date('dmy_H_s_i');
+            $img_ext = strtolower($image->getClientOriginalExtension());
+            $img_full_name = $img_name . '.' . $img_ext;
+            $upload_path = 'media/';
+            $img_url = $upload_path . $img_full_name;
+            $image->move($upload_path , $img_full_name);
+            $data['logo'] = $img_url;
+        }
+
+        $product->update($data);
+
+        return redirect()->route('products.index')->with('message', 'Product Updated Successfully');
     }
 
 
     public function destroy(Product $product): RedirectResponse
     {
+        unlink($product->logo);
+
         $product->delete();
 
         return redirect()->route('products.index');

@@ -3,11 +3,11 @@
 @section('content')
 
 
-    <div class="row row-cols-2 my-2 mx-0">
-        <div class="col-auto mr-auto">
-            <h2>Insert New Product</h2>
+    <div class="row justify-content-between">
+        <div class="pull-left">
+            <h2>To Do SHOW</h2>
         </div>
-        <div class="col-auto">
+        <div class="pull-right">
             <a href="{{ route('products.index') }}" class="btn btn-primary">Back to list</a>
         </div>
     </div>
