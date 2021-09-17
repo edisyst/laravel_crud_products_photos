@@ -14,7 +14,8 @@
 
 
     <div class="row">
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
 
             <div class="form-row">
                 <div class="form-group col-md-6">

@@ -13,6 +13,12 @@
             </div>
         </div>
 
+        @if($message = \Illuminate\Support\Facades\Session::get('success'))
+            <div class="alert alert-success">
+                <p>{{ $message }}</p>
+            </div>
+        @endif
+
         <div class="col-lg-12 margin-tb">
             <table class="table table-bordered">
                 <tr>
