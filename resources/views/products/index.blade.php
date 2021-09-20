@@ -33,7 +33,7 @@
                 <tr>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->code }}</td>
-                    <td>{{ $product->details }}</td>
+                    <td>{{ \Illuminate\Support\Str::limit($product->details, 70) }}</td>
                     <td>
                         <img src="{{ \Illuminate\Support\Facades\URL::to($product->logo) }}" width="150px">
                     </td>
