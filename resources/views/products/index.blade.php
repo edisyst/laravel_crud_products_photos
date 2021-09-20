@@ -38,20 +38,24 @@
                         <img src="{{ \Illuminate\Support\Facades\URL::to($product->logo) }}" width="150px">
                     </td>
                     <td>
-                        <a href="{{ route('products.show', $product) }}" class="btn btn-info">Show</a>
-                        <a href="{{ route('products.edit', $product) }}" class="btn btn-primary">Edit</a>
-
-                        <form action="{{ route('products.destroy', $product) }}" method="POST"
-                              onsubmit="return confirm('Sei sicuro?')">
-                            @method('DELETE')
-                            @csrf
-                            <button class="btn btn-danger">Delete</button>
-                        </form>
+                        <div class="btn-group" role="group">
+                            <a href="{{ route('products.show', $product) }}" class="btn btn-info mr-2">Show</a>
+                            <a href="{{ route('products.edit', $product) }}" class="btn btn-primary mr-2">Edit</a>
+                            <form action="{{ route('products.destroy', $product) }}" method="POST"
+                                  onsubmit="return confirm('Sei sicuro?')">
+                                @method('DELETE')
+                                @csrf
+                                <button class="btn btn-danger mr-2">Delete</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
             @endforeach
 
         </table>
+
+        {!! $products->links() !!}
+
     </div>
 
 
